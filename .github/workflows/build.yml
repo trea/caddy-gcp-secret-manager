@@ -1,0 +1,43 @@
+name: "Test"
+
+on:
+  push
+
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.20"
+
+      - name: Build
+        run: go build -v ./...
+
+      - name: Authenticate with Google for integration testing
+        uses: google-github-actions/auth@v1
+        with:
+          workload_identity_provider: 'projects/956203386705/locations/global/workloadIdentityPools/workload-identity-pool/providers/github-actions-provider'
+          service_account: 'github-integration-testing@caddy-gcp-secret-manager.iam.gserviceaccount.com'
+
+      - name: Test
+        run: go test -coverprofile cover.out -v ./...
+        env:
+          INTEGRATION_PROJECT_ID: "caddy-gcp-secret-manager"
+
+      - name: Convert coverage to HTML
+        run: go tool cover -html=cover.out -o coverage.html
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: "coverage-${{ github.sha }}.html"
+          path: "coverage.html"
