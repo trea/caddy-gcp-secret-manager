@@ -7,6 +7,7 @@ require (
 	github.com/caddyserver/caddy/v2 v2.6.4
 	github.com/caddyserver/certmagic v0.17.2
 	github.com/sethvargo/go-retry v0.2.4
+	go.uber.org/zap v1.24.0
 	google.golang.org/api v0.114.0
 	google.golang.org/protobuf v1.30.0
 )
@@ -44,7 +45,6 @@ require (
 	go.opencensus.io v0.24.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
-	go.uber.org/zap v1.24.0 // indirect
 	golang.org/x/crypto v0.5.0 // indirect
 	golang.org/x/exp v0.0.0-20221205204356-47842c84f3db // indirect
 	golang.org/x/mod v0.8.0 // indirect
