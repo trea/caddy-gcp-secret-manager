@@ -16,6 +16,10 @@ var (
 	ErrCredentialsFile = errors.New("unable to read credentials file")
 )
 
+func init() {
+	caddy.RegisterModule(CaddyGcpSecretManagerStorage{})
+}
+
 func (c CaddyGcpSecretManagerStorage) CaddyModule() caddy.ModuleInfo {
 	return caddy.ModuleInfo{
 		ID: "caddy.storage.gcp-secret-manager",
